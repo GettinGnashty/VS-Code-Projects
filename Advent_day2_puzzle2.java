@@ -1,5 +1,8 @@
 import java.io.*;
 import java.util.*;
+//works except for edge case where is initially decreasing
+//if the problem index is removed and flips the data to increasing, doesn't work
+//example of edge case: [3 1 4 5 6] where 3 is removed
 
 public class Advent_day2_puzzle2 {
 

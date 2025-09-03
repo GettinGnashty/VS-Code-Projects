@@ -1,3 +1,4 @@
+//COMPLETE
 
 public class Advent_day2_puzzle1 {
 
