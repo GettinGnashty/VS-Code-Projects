@@ -10,8 +10,7 @@ import java.util.regex.Pattern;
 
 public class Advent_day3_puzzle2 {
     public static void main(String[] args) {
-        List<String> numbers = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("day3.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("day3example.txt"))) {
             String line;
             StringBuilder contentBuilder = new StringBuilder();
 
@@ -19,16 +18,26 @@ public class Advent_day3_puzzle2 {
                 contentBuilder.append(line); //puts all info read in onto a single line for processing purposes
             }
             String fileContent = contentBuilder.toString();
-            searchInput(fileContent, numbers);
+            splitData(fileContent);
 
     } catch (IOException e) {
         e.printStackTrace();
     }
+    
+
+    }
+//this SHOULD work, but not finished yet
+    static void splitData(String line) {
+        List<String> emptyList = new ArrayList<>();
+        String[] cleanData = line.split("don\\'t\\(\\)");
+        for (int i = 0; i < cleanData.length; i++)
+            emptyList.add(cleanData[0]);
+            System.out.println(cleanData[i]);
 
     }
 
     
-
+//everything below this doesn't work
     static void searchInput(String line, List<String> numbers) {
         boolean toDo = true;
         String allData = line;
