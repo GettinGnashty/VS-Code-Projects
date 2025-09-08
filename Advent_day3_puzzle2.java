@@ -3,14 +3,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 
 public class Advent_day3_puzzle2 {
     public static void main(String[] args) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("day3example.txt"))) {
+        List<String> numbers = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\harrison.knight\\VS Code Projects\\resources\\day3example.txt"))) {
             String line;
             StringBuilder contentBuilder = new StringBuilder();
 
@@ -18,7 +17,7 @@ public class Advent_day3_puzzle2 {
                 contentBuilder.append(line); //puts all info read in onto a single line for processing purposes
             }
             String fileContent = contentBuilder.toString();
-            splitData(fileContent);
+            searchInput(fileContent, numbers);
 
     } catch (IOException e) {
         e.printStackTrace();
@@ -27,52 +26,45 @@ public class Advent_day3_puzzle2 {
 
     }
 //this SHOULD work, but not finished yet
-    static void splitData(String line) {
-        List<String> emptyList = new ArrayList<>();
-        String[] cleanData = line.split("don\\'t\\(\\)");
-        for (int i = 0; i < cleanData.length; i++)
-            emptyList.add(cleanData[0]);
-            System.out.println(cleanData[i]);
+    // static void splitData(String line, List<String> numbers) {
+    //     String[] dontRemoved = line.split("don\\'t\\(\\)");
+    //     for (int i = 0; i < dontRemoved.length; i++){
+    //         initialMul.add(dontRemoved[0]); //adding the intial mul before the first do/don't
+    //         String[] doMul = line.split("do\\(\\)");
+    //         System.out.println(dontRemoved[i]);
+    //     }
+    //     searchInput()
 
-    }
+    // }
 
     
-//everything below this doesn't work
     static void searchInput(String line, List<String> numbers) {
-        boolean toDo = true;
-        String allData = line;
-        Pattern doTrue = Pattern.compile("");
-        Pattern dontFalse = Pattern.compile("don\\'t\\(\\)");
-        Pattern findMul = Pattern.compile("do\\(\\)[.*]mul\\(\\d+\\,\\d+\\)"); //establishes criteria to search for
-        Matcher mulMatcher = findMul.matcher(allData); //searches for mul
-        Matcher doMatcher = doTrue.matcher(allData); //searches for do()
-        Matcher dontMatcher = dontFalse.matcher(allData);// searches for don't()
-        int total = 0;
-
-
-            if (doMatcher.find()){
-                toDo = true;
-            }
-            if(dontMatcher.find()) {
-                toDo=false;
-            }
-            if (toDo){
-                mulMatcher.find();
-                String cleanedUp = mulMatcher.group().replaceAll("mul()[^0-9]", "").replaceAll("\\)", "");
-                String[] splitMe = cleanedUp.split(",",2); //create an array using the paired numbers, splitting at the comma
-                for (int i = 0; i < 1; i++){ //iterate once over the newly created array
-                    String zeroIndex = splitMe[0];
-                    System.out.println(zeroIndex);
-                    String firstIndex = splitMe[1];
-                    System.out.println(firstIndex);
-                    total += (Integer.parseInt(zeroIndex) * (Integer.parseInt(firstIndex)));
-                    System.out.println("Current total: " + total);
-                }
-            }
         
-    }
+        List<String> firstMulInstructions = new ArrayList<>();
+        String phrase = line;
+        String[] dontRemoved = line.split("don\\'t\\(\\)");
+        firstMulInstructions.add(dontRemoved[0]); //adds everything before the first "don't()" mul statement
+        String[] doRemoved = phrase.split("do\\(\\)");
+        System.out.println(firstMulInstructions); //the initial mul instructions upto the first don't
+        for (int i = 0; i < dontRemoved.length; i++){
+            System.out.println(doRemoved[i]);
+        }
+        // Pattern pattern = Pattern.compile("mul\\(\\d+\\,\\d+\\)"); //establishes criteria to search for
+        // Matcher matcher = pattern.matcher(phrase); //does the searching
+        // int total = 0;
 
-    static void searchDont(String line, Matcher dontMatcher) {
-        while (dontMatcher.find()) {}
+    
+        // while (matcher.find()) {
+        //     String cleanedUp = matcher.group().replaceAll("mul()[^0-9]", "").replaceAll("\\)", "");
+        //     String[] splitMe = cleanedUp.split(",",2); //create an array using the paired numbers, splitting at the comma
+        //     for (int i = 0; i < 1; i++){ //iterate once over the newly created array
+        //         String zeroIndex = splitMe[0];
+        //         // System.out.println(zeroIndex);
+        //         String firstIndex = splitMe[1];
+        //         // System.out.println(firstIndex);
+        //         total += (Integer.parseInt(zeroIndex) * (Integer.parseInt(firstIndex)));
+        //         System.out.println("Current total: " + total);
+        //     }
+        // }
     }
 }

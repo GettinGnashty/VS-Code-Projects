@@ -22,7 +22,7 @@ public class Advent_day2_puzzle2 {
                 grid.add(row);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //bad practice
         }
 
         iterateGrid(grid, unsafe);

@@ -15,7 +15,6 @@ public class Advent_day3_puzzle1 {
         try (BufferedReader reader = new BufferedReader(new FileReader("day3.txt"))) {
             String line;
             StringBuilder contentBuilder = new StringBuilder();
-
             while ((line = reader.readLine()) != null) {
                 contentBuilder.append(line); //puts all data onto a single line for processing purposes
             }
