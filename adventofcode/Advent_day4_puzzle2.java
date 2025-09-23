@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Advent_day4_puzzle2 {
+
     public static void main(String[] args) {
         List<List<Character>> grid = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\harrison.knight\\VS Code Projects\\resources\\day4example.txt"))) {
@@ -42,36 +43,25 @@ public class Advent_day4_puzzle2 {
 
     static int checkWays(List<List<Character>> grid, char[] xmas, int i, int j, int xmasCounter) {
         int[][] directions = {
-        //     {1, 0}, //[0] right 🢂
-        // {-1, 0}, //[1] left 🢀
-        // {0, -1}, //[2] up 🢁
-        // {0, 1}, //[3] down 🢃
-        {-1, -1}, //[0] left up 🢄
-        {1, 1}, //[1] right down 🢆
+        {1, 1}, //[0] right down 🢆
+        {-1, 1}, //[1] left down 🢇
         {1, -1}, //[2] right up 🢅
-        {-1, 1}}; //[3] left down 🢇
-        
-        
+        {-1, -1}}; //[3] left up 🢄
 
         for (int directionsIndex = 0; directionsIndex < directions.length; directionsIndex++) {
             int row = j; //need to maintain the i/j index but check the directions
             int column = i;
             try {
                 if (grid.get(column += directions[directionsIndex][1]).get(row += directions[directionsIndex][0]) == xmas[0]) { //checks for M
-                    if (grid.get(column += directions[directionsIndex][1]).get(row += directions[directionsIndex][0]) == xmas[1]) { //checks for S 
-                            xmasCounter++;
-                        }
+                    if (grid.get(column += directions[directionsIndex][1]).get(row += directions[directionsIndex][0]) == xmas[1]) { //checks for S
+
+                        xmasCounter++;
                     }
-                if (grid.get(column += directions[directionsIndex][1]).get(row += directions[directionsIndex][0]) == xmas[0]) { //checks for M
-                    if (grid.get(column += directions[directionsIndex][1]).get(row += directions[directionsIndex][0]) == xmas[1]) { //checks for S 
-                            xmasCounter++;
-                        }
-                    }
-                }catch (IndexOutOfBoundsException e) {
+                }
+            } catch (IndexOutOfBoundsException e) {
                 //do nothing
             }
-        }  
+        }
         return xmasCounter;
     }
 }
-
