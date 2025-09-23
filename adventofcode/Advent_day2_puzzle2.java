@@ -1,3 +1,4 @@
+package adventofcode;
 import java.io.*;
 import java.util.*;
 //works except for edge case where is initially decreasing
