@@ -31,8 +31,11 @@ public class Advent_day5_puzzle1 {
                         rules.put(ruleIntArray[0], ruleValues);
                     if (line.trim().isEmpty()) {
                         continue;
-
                         }
+                    if (line.length() > 5) {
+                        //create new arrays
+                    }
+                        
                     
                     }System.out.println(rules);
             } 
