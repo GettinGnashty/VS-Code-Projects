@@ -4,10 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Advent_day5_puzzle1 {
+public class Advent_day5_puzzle2 {
 
     public static void main(String[] args) {
         HashMap<Integer, ArrayList<Integer>> rules = new HashMap<>();
@@ -45,14 +46,13 @@ public class Advent_day5_puzzle1 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        checkNumbers(rules, pages);
+        getPages(rules, pages);
     }
 
-    static void checkNumbers(HashMap<Integer, ArrayList<Integer>> rules,
+    static void getPages(HashMap<Integer, ArrayList<Integer>> rules,
             List<List<Integer>> pages) {
-        List<List<Integer>> correctPages = new ArrayList<>();
+        List<List<Integer>> incorrectPages = new ArrayList<>();
 
-        outerLoop:
         for (int i = 0; i < pages.size(); i++) {
             List<Integer> currentArray = pages.get(i);
             boolean safeArray = true;
@@ -66,29 +66,58 @@ public class Advent_day5_puzzle1 {
                             if (rules.get(currentNumber).contains(nextNumber)) { //if key contains value
                                 safeArray = true;
                             } else {
-                                safeArray = false; //if key does not contain value, skip array and go next
+                                safeArray = false; //if key does not contain value, add array to incorrect pages
+                                incorrectPages.add(currentArray);
                                 break innerLoop;
                             }
-                        }else { //if key does not exist, skip array and go next
+                        } else { //if key does not exist, skip array and go next
                             safeArray = false;
+                            incorrectPages.add(currentArray);
                             break innerLoop;
                         }
                     } catch (IndexOutOfBoundsException e) {
-                        if (safeArray == true) {
-                            correctPages.add(currentArray); //add the qualifying arrays to correctPages
-                        }
                         break innerLoop;
                     }
                 }
             }
         }
-        findInt(correctPages);
+        sortArrays(incorrectPages, rules);
     }
 
-    static int findInt(List<List<Integer>> correctPages) {
+    static void sortArrays(List<List<Integer>> incorrectPages, HashMap<Integer, ArrayList<Integer>> rules) {
+        List<List<Integer>> incorrectPagesSorted = new ArrayList<>();
+        for (int i = 0; i < incorrectPages.size(); i++) {
+            List<Integer> currentArray = incorrectPages.get(i);
+
+            for (int j = 0; j < currentArray.size(); j++) {
+                for (int k = 0; k < currentArray.size(); k++) {
+                    try {
+                        int currentNumber = incorrectPages.get(i).get(j);
+                        int nextNumber = incorrectPages.get(i).get(k);
+                        if (rules.containsKey(incorrectPages.get(i).get(j))) {
+                            if (rules.get(currentNumber).contains(nextNumber)) { //rule check
+                                //do nothing, its fine
+                            } else {
+                                Collections.swap(currentArray, j, k); //swap the numbers at each index
+                            }
+                        } else {
+                            Collections.swap(currentArray, j, k); //if key doesn't exist, swap number at each index
+                        }
+
+                    } catch (IndexOutOfBoundsException e) {
+                    }
+                }
+            }
+            incorrectPagesSorted.add(currentArray); //add the sorted array to an array (2-D array)
+        }
+        findInt(incorrectPagesSorted);
+
+    }
+
+    static int findInt(List<List<Integer>> incorrectPagesSorted) {
         int total = 0;
-        for (int i = 0; i < correctPages.size(); i++) {
-            List<Integer> currentArray = correctPages.get(i);
+        for (int i = 0; i < incorrectPagesSorted.size(); i++) {
+            List<Integer> currentArray = incorrectPagesSorted.get(i);
             int getMiddleIndex = currentArray.size() / 2; //divide size of array by 2, gets the middle index
             total += currentArray.get(getMiddleIndex);
         }

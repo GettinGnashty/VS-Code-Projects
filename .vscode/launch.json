@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Advent_day5_puzzle1",
+            "request": "launch",
+            "mainClass": "adventofcode.Advent_day5_puzzle1",
+            "projectName": "VS Code Projects_87a75f7f"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
