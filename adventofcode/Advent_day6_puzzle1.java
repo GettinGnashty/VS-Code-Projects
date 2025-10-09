@@ -26,60 +26,65 @@ public class Advent_day6_puzzle1 {
     }
 
     static void findStart(List<List<Character>> grid) {
+        int uniquePath = 0;
         char replacement = 'X';
         char obstacle = '#';
-        int directions[][]
+        int direction = 0;
+        int directionsMap[][]
                 = { //[0][1]
-                    {1, 0}, // [0]right
-                    {0, 1}, //[1] down
-                    {-1, 0}, //[2]left
-                    {0, -1} //[3]up
+                    {0, -1}, //[0]up
+                    {1, 0}, // [1]right
+                    {0, 1}, //[2] down
+                    {-1, 0} //[3]left
                 };
 
         for (int i = 0; i < grid.size(); i++) {
             for (int j = 0; j < grid.get(i).size(); j++) {
-                int row = j;
-                int column = i;
-                if (grid.get(column).get(row) == '^') {
-                    int newRow = row + directions[3][0];
-                    int newCol = column + directions[3][1];
-                    while (newRow >= 0 && newRow < grid.get(0).size() && newCol >= 0 && newCol < grid.size() && grid.get(newCol).get(newRow) != '#') {
-                        grid.get(newCol).set(newRow, replacement);
-                        newRow = newRow + directions[3][0];
-                        newCol = newCol + directions[3][1];
-                    }
+                if (grid.get(i).get(j) == '^') {
+                    int startRow = j;
+                    int startCol = i;
+                    turn(grid, directionsMap, startCol, startRow, replacement, obstacle, direction, uniquePath);
                 }
             }
         }
         System.out.println(grid);
     }
 
-    static void turnEast(List<List<Character>> grid, int[][] directions, int i, int j) {
+    static void turn(List<List<Character>> grid, int[][] directionsMap, int startCol, int startRow, char replacement, char obstacle, int direction, int uniquePath) {
+        for (int i = startCol; i < grid.size(); startCol++) {
+            for (int j = startRow; startRow < grid.get(startCol).size(); startRow++) {
+                while (grid.get(startCol).get(startRow) != obstacle) {
+                    try {
 
-        int uniquePaths = 0;
+                        grid.get(startCol).set(startRow, replacement);
+                        startRow = startRow + directionsMap[direction][0];
+                        startCol = startCol + directionsMap[direction][1];
+                        if (grid.get(startCol + directionsMap[direction][1]).get(startRow + directionsMap[direction][0]) == obstacle) { //if obstacle is found
+                            if (direction == 3) { //if currently heading left/west
+                                direction = 0; //reset back to heading up/north
+                                turn(grid, directionsMap, startCol, startRow, replacement, obstacle, direction, uniquePath);
+                            } else {
+                                direction++;
+                                turn(grid, directionsMap, startCol, startRow, replacement, obstacle, direction, uniquePath);
+                            }
+                        }
+                    } catch (IndexOutOfBoundsException e) {
 
-        for (int yAxisStart = i; yAxisStart < grid.size(); yAxisStart++) {
-            for (int xAxisStart = j; xAxisStart < grid.get(i).size(); xAxisStart++) {
-                try {
-
-                } catch (IndexOutOfBoundsException e) {
-                    //do nothing
+                        for (int col = 0; i < grid.size(); col++) {
+                            for (int row = 0; j < grid.get(col).size(); row++) {
+                                if (grid.get(col).get(row) == replacement) {
+                                    uniquePath++;
+                                }
+                            }
+                        }
+                        System.out.println(uniquePath);
+                    }
+                    for (List<Character> r : grid) {
+                        System.out.println(r);
+                    }
+                    System.out.println();
                 }
             }
         }
-        System.out.println("Unique paths: " + uniquePaths);
-
-    }
-
-    static void turnSouth(List<List<Character>> grid, int[][] directions, int i, int j) {
-
-    }
-
-    static void turnWest(List<List<Character>> grid, int[][] directions, int i, int j) {
-
-    }
-
-    static void turnNorth(List<List<Character>> grid, int[][] directions, int i, int j) {
-
     }
 }
