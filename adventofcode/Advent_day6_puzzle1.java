@@ -41,50 +41,57 @@ public class Advent_day6_puzzle1 {
         for (int i = 0; i < grid.size(); i++) {
             for (int j = 0; j < grid.get(i).size(); j++) {
                 if (grid.get(i).get(j) == '^') {
-                    int startRow = j;
-                    int startCol = i;
-                    turn(grid, directionsMap, startCol, startRow, replacement, obstacle, direction, uniquePath);
+                    int currentRow = j;
+                    int currentCol = i;
+                    turn(grid, directionsMap, currentCol, currentRow, replacement, obstacle, direction, uniquePath);
                 }
             }
         }
         System.out.println(grid);
     }
 
-    static void turn(List<List<Character>> grid, int[][] directionsMap, int startCol, int startRow, char replacement, char obstacle, int direction, int uniquePath) {
-        for (int i = startCol; i < grid.size(); startCol++) {
-            for (int j = startRow; startRow < grid.get(startCol).size(); startRow++) {
-                while (grid.get(startCol).get(startRow) != obstacle) {
+    static void turn(List<List<Character>> grid, int[][] directionsMap, int currentCol, int currentRow, char replacement, char obstacle, int direction, int uniquePath) {
+        direction = 0; //reset back to heading up/north
+        for (int i = currentCol; i < grid.size(); currentCol++) {
+            for (int j = currentRow; currentRow < grid.get(currentCol).size(); currentRow++) {
+                while (currentRow < grid.get(currentCol).size() && currentCol < grid.size()) {
                     try {
-
-                        grid.get(startCol).set(startRow, replacement);
-                        startRow = startRow + directionsMap[direction][0];
-                        startCol = startCol + directionsMap[direction][1];
-                        if (grid.get(startCol + directionsMap[direction][1]).get(startRow + directionsMap[direction][0]) == obstacle) { //if obstacle is found
+                        if (grid.get(currentCol + directionsMap[direction][1]).get(currentRow + directionsMap[direction][0]) != obstacle) { //if obstacle is not found in next step
+                            grid.get(currentCol).set(currentRow, replacement); //replace current position with 'X'
+                            currentRow = currentRow + directionsMap[direction][0];
+                            currentCol = currentCol + directionsMap[direction][1];
+                        } else { //if obstacle is found
                             if (direction == 3) { //if currently heading left/west
                                 direction = 0; //reset back to heading up/north
-                                turn(grid, directionsMap, startCol, startRow, replacement, obstacle, direction, uniquePath);
                             } else {
                                 direction++;
-                                turn(grid, directionsMap, startCol, startRow, replacement, obstacle, direction, uniquePath);
                             }
+
                         }
                     } catch (IndexOutOfBoundsException e) {
-
-                        for (int col = 0; i < grid.size(); col++) {
-                            for (int row = 0; j < grid.get(col).size(); row++) {
-                                if (grid.get(col).get(row) == replacement) {
-                                    uniquePath++;
-                                }
-                            }
-                        }
-                        System.out.println(uniquePath);
+                        countUniquePaths(grid);
                     }
-                    for (List<Character> r : grid) {
-                        System.out.println(r);
-                    }
-                    System.out.println();
                 }
             }
         }
+    }
+
+    static void printGrid(List<List<Character>> grid) {
+        for (List<Character> r : grid) {
+            System.out.println(r);
+        }
+        System.out.println();
+    }
+
+    static void countUniquePaths(List<List<Character>> grid) {
+        int uniquePath = 0;
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid.get(i).size(); j++) {
+                if (grid.get(i).get(j) == 'X') {
+                    uniquePath++;
+                }
+            }
+        }
+        System.out.println("Total unique paths: " + uniquePath);
     }
 }
