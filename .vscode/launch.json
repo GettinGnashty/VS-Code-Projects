@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "day1",
+            "request": "launch",
+            "mainClass": "adventofcode2025.day1",
+            "projectName": "VS Code Projects_87a75f7f"
+        },
+        {
+            "type": "java",
+            "name": "leetcode8",
+            "request": "launch",
+            "mainClass": "leetcode_stuff.leetcode8",
+            "projectName": "VS Code Projects_87a75f7f"
+        },
+        {
+            "type": "java",
+            "name": "leetcode6",
+            "request": "launch",
+            "mainClass": "leetcode_stuff.leetcode6",
+            "projectName": "VS Code Projects_87a75f7f"
+        },
+        {
+            "type": "java",
             "name": "Advent_day6_puzzle1",
             "request": "launch",
             "mainClass": "adventofcode.Advent_day6_puzzle1",

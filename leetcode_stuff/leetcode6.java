@@ -18,7 +18,7 @@ Output: [[1]] */
 public class leetcode6 {
 
     public static void main(String[] args) {
-        int numRows = 5;
+        int numRows = 7;
         generate(numRows);
     }
 

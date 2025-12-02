@@ -59,9 +59,9 @@ public class Advent_day6_puzzle1 {
                 while (currentRow < grid.get(currentCol).size() || currentCol < grid.size()) {
                     try {
                         if (grid.get(currentCol + directionsMap[direction][1]).get(currentRow + directionsMap[direction][0]) != obstacle) { //if obstacle is not found in next step
-                            grid.get(currentCol+ directionsMap[direction][1]).set(currentRow + directionsMap[direction][0], replacement); //replace current position with 'X'
-                            currentRow = currentRow + directionsMap[direction][0];
-                            currentCol = currentCol + directionsMap[direction][1];
+                            grid.get(currentCol + directionsMap[direction][1]).set(currentRow + directionsMap[direction][0], replacement); //replace next position with 'X'
+                            currentRow = currentRow + directionsMap[direction][0]; //take a step in the X direction
+                            currentCol = currentCol + directionsMap[direction][1]; //take a step in the Y direction
                             // printGrid(grid);
                         } else { //if obstacle is found
                             if (direction == 3) { //if currently heading left/west

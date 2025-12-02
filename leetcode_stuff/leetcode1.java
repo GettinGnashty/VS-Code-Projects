@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class leetcode1 {
 
     public static void main(String[] args) {
-        System.out.println(romanToInt("XII"));
+        System.out.println(romanToInt("IXL"));
     }
 
     public static int romanToInt(String s) {
